@@ -16,3 +16,13 @@ html {
 body {
   margin-bottom: 60px;
 }
+/* Add your custom styles here */
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.card-img-top {
+    max-height: 200px;
+    object-fit: cover;
+}

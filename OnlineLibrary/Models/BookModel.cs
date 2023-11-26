@@ -19,6 +19,6 @@ namespace OnlineLibrary.Models
         public virtual ICollection<Fee> Fees { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
-
+        public AuthorModel Author { get; internal set; }
     }
 }
