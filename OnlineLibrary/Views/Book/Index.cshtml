@@ -73,6 +73,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.AvailableCopies)
             </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImagePath)
+                </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new {  id=item.Idbook }) |
                     @Html.ActionLink("Details", "Details", new { id = item.Idbook }) |

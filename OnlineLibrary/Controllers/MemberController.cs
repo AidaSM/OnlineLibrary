@@ -7,7 +7,7 @@ using OnlineLibrary.Models;
 
 namespace OnlineLibrary.Controllers
 {
-    [Authorize(Roles ="User")]
+    [Authorize(Roles = "admin")]
     public class MemberController : Controller
     {
         public Repository.MemberRepository _repository;
@@ -31,27 +31,16 @@ namespace OnlineLibrary.Controllers
         }
 
         // GET: MemberController/Create
+        [Authorize(Roles = "User, Admin")]
         public ActionResult Create()
         {
             return View("CreateMember");
         }
 
-        // POST: MemberController/Create
-        /*[HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }*/
+     
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> Create([Bind("Username,Password,Email,RegistrationDate")] MemberModel model)
         {
             try

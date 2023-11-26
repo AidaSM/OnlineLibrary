@@ -99,6 +99,7 @@ namespace OnlineLibrary.Repository
                 existingBook.Language = bookModel.Language;
                 existingBook.TotalCopies = bookModel.TotalCopies;
                 existingBook.AvailableCopies = bookModel.AvailableCopies;
+                existingBook.ImagePath=bookModel.ImagePath;
                 dbContext.SaveChanges();
             }
         }
@@ -125,6 +126,7 @@ namespace OnlineLibrary.Repository
                 bookModel.Language = dbBook.Language;
                 bookModel.TotalCopies = dbBook.TotalCopies;
                 bookModel.AvailableCopies = dbBook.AvailableCopies;
+                bookModel.ImagePath = dbBook.ImagePath;
             }
             return bookModel;
         }
@@ -142,6 +144,7 @@ namespace OnlineLibrary.Repository
                 book.Language = bookModel.Language;
                 book.TotalCopies = bookModel.TotalCopies;
                 book.AvailableCopies = bookModel.AvailableCopies;
+                book.ImagePath=bookModel.ImagePath;
             }
             return book;
         }

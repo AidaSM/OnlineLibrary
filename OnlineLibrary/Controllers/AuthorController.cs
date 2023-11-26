@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using OnlineLibrary.Models;
 
 namespace OnlineLibrary.Controllers
 {
+    [Authorize(Roles ="admin")]
     public class AuthorController : Controller
     {
         private readonly ApplicationDbContext _context;

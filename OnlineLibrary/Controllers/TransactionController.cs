@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLibrary.Data;
 using OnlineLibrary.Models;
 
 namespace OnlineLibrary.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class TransactionController : Controller
     {
         public Repository.TransactionRepository _repository;
@@ -14,6 +16,7 @@ namespace OnlineLibrary.Controllers
             _repository = new Repository.TransactionRepository(dbContext);
         }
         // GET: TransactionController
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var transactions = _repository.GetTransactions();
@@ -28,27 +31,15 @@ namespace OnlineLibrary.Controllers
         }
 
         // GET: TransactionController/Create
+        [Authorize(Roles = "User, Admin")]
         public ActionResult Create()
         {
             return View("CreateTransaction");
         }
 
-        // POST: TransactionController/Create
-        /* [HttpPost]
-         [ValidateAntiForgeryToken]
-         public ActionResult Create(IFormCollection collection)
-         {
-             try
-             {
-                 return RedirectToAction(nameof(Index));
-             }
-             catch
-             {
-                 return View();
-             }
-         }*/
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> Create([Bind("Idmember,Idbook,Date,Retrun,Status")] TransactionModel model)
         {
             try

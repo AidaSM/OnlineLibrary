@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLibrary.Data;
 using OnlineLibrary.Models;
 
 namespace OnlineLibrary.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class ReviewController : Controller
     {
         public Repository.ReviewRepository _repository;
@@ -14,6 +16,7 @@ namespace OnlineLibrary.Controllers
             _repository = new Repository.ReviewRepository(dbContext);
         }
         // GET: ReviewController
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var reviews = _repository.GetReviews();
@@ -26,29 +29,17 @@ namespace OnlineLibrary.Controllers
             var model = _repository.GetReviewByID(id);
             return View("DetailsReview", model);
         }
-
+        [Authorize(Roles = "User, Admin")]
         // GET: ReviewController/Create
         public ActionResult Create()
         {
             return View("CreateReview");
         }
 
-        // POST: ReviewController/Create
-        /*[HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }*/
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User, Admin")]
         public async Task<IActionResult> Create([Bind("Idmember,Idbook,Rating,Text,Date")] ReviewModel model)
         {
             try

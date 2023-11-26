@@ -21,7 +21,7 @@ namespace OnlineLibrary.Models.DBObjects
         public string? Language { get; set; }
         public int TotalCopies { get; set; }
         public int AvailableCopies { get; set; }
-
+        public string? ImagePath { get; set; }
         public virtual Author IdauthorNavigation { get; set; } = null!;
         public virtual Genre? IdgenreNavigation { get; set; }
         public virtual ICollection<Fee> Fees { get; set; }
