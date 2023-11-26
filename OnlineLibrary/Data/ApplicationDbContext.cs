@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using OnlineLibrary.Models.DBObjects;
 
 namespace OnlineLibrary.Data
 {
-    public partial class ApplicationDbContext : DbContext
+    public partial class ApplicationDbContext : IdentityDbContext
     {
         public ApplicationDbContext()
         {
@@ -17,12 +18,12 @@ namespace OnlineLibrary.Data
         {
         }
 
-        public virtual DbSet<AspNetRole> AspNetRoles { get; set; } = null!;
+       /* public virtual DbSet<AspNetRole> AspNetRoles { get; set; } = null!;
         public virtual DbSet<AspNetRoleClaim> AspNetRoleClaims { get; set; } = null!;
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; } = null!;
         public virtual DbSet<AspNetUserClaim> AspNetUserClaims { get; set; } = null!;
         public virtual DbSet<AspNetUserLogin> AspNetUserLogins { get; set; } = null!;
-        public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; } = null!;
+        public virtual DbSet<AspNetUserToken> AspNetUserTokens { get; set; } = null!;*/
         public virtual DbSet<Author> Authors { get; set; } = null!;
         public virtual DbSet<Book> Books { get; set; } = null!;
         public virtual DbSet<Fee> Fees { get; set; } = null!;
@@ -41,7 +42,10 @@ namespace OnlineLibrary.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AspNetRole>(entity =>
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<AspNetUserLogin>().HasKey(l => new { l.LoginProvider, l.ProviderKey });
+            modelBuilder.Entity<AspNetUserToken>().HasKey(t => new { t.UserId, t.LoginProvider, t.Name });
+            /*modelBuilder.Entity<AspNetRole>(entity =>
             {
                 entity.HasIndex(e => e.NormalizedName, "RoleNameIndex")
                     .IsUnique()
@@ -51,7 +55,8 @@ namespace OnlineLibrary.Data
 
                 entity.Property(e => e.NormalizedName).HasMaxLength(256);
             });
-
+            */
+            /*
             modelBuilder.Entity<AspNetRoleClaim>(entity =>
             {
                 entity.HasIndex(e => e.RoleId, "IX_AspNetRoleClaims_RoleId");
@@ -60,7 +65,8 @@ namespace OnlineLibrary.Data
                     .WithMany(p => p.AspNetRoleClaims)
                     .HasForeignKey(d => d.RoleId);
             });
-
+            */
+            /*
             modelBuilder.Entity<AspNetUser>(entity =>
             {
                 entity.HasIndex(e => e.NormalizedEmail, "EmailIndex");
@@ -92,7 +98,8 @@ namespace OnlineLibrary.Data
                             j.HasIndex(new[] { "RoleId" }, "IX_AspNetUserRoles_RoleId");
                         });
             });
-
+            */
+            /*
             modelBuilder.Entity<AspNetUserClaim>(entity =>
             {
                 entity.HasIndex(e => e.UserId, "IX_AspNetUserClaims_UserId");
@@ -116,7 +123,8 @@ namespace OnlineLibrary.Data
                     .WithMany(p => p.AspNetUserLogins)
                     .HasForeignKey(d => d.UserId);
             });
-
+            */
+            /*
             modelBuilder.Entity<AspNetUserToken>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.LoginProvider, e.Name });
@@ -129,6 +137,7 @@ namespace OnlineLibrary.Data
                     .WithMany(p => p.AspNetUserTokens)
                     .HasForeignKey(d => d.UserId);
             });
+            */
 
             modelBuilder.Entity<Author>(entity =>
             {

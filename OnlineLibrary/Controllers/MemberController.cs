@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Core.Types;
 using OnlineLibrary.Data;
@@ -6,6 +7,7 @@ using OnlineLibrary.Models;
 
 namespace OnlineLibrary.Controllers
 {
+    [Authorize(Roles ="User")]
     public class MemberController : Controller
     {
         public Repository.MemberRepository _repository;
