@@ -1,0 +1,66 @@
+﻿@model IEnumerable<OnlineLibrary.Models.FeeModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Idfee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Idbook)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Idmember)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsPaid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idfee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idbook)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Idmember)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPaid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Idfee }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Idfee }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Idfee })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

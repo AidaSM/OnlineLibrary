@@ -1,0 +1,29 @@
+{
+  "profiles": {
+    "OnlineLibrary": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ConnectionStrings_DefaultConnection": "Data Source/=DESKTOP-6GE96MT\\\\MSSQLSERVER01;Initial Catalog/=OnlineLibrary;Integrated Security/=True;Multiple Active Result Sets/=True;Encrypt/=False"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:7133;http://localhost:5064"
+    },
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:11693",
+      "sslPort": 44312
+    }
+  }
+}

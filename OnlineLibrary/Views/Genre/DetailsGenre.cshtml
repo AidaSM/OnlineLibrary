@@ -1,0 +1,31 @@
+﻿@model OnlineLibrary.Models.GenreModel
+
+@{
+    ViewData["Title"] = "DetailsGenre";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>DetailsGenre</h1>
+
+<div>
+    <h4>GenreModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2" hidden>
+            @Html.HiddenFor(model => model.Idgenre)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Idgenre)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Idgenre }) |
+    <a asp-action="Index">Back to List</a>
+</div>
