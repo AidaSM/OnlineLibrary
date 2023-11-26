@@ -13,11 +13,13 @@ namespace OnlineLibrary.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly BookRepository repository;
+        private readonly TransactionRepository transactionRepository;
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
             repository = new BookRepository(context);
+            transactionRepository = new TransactionRepository(context);
         }
 
         public IActionResult Index()
@@ -37,6 +39,18 @@ namespace OnlineLibrary.Controllers
             // Pass the book model to the view
             return View(book);
         }
+        public IActionResult Details(Guid id)
+        {
+            // Get the book details (you may need to modify this based on your data structure)
+            var book = repository.GetBookByID(id);
+
+            if (book == null)
+            {
+                return NotFound();
+            }
+
+            return View(book);
+        }
 
         public IActionResult Privacy()
         {
@@ -48,5 +62,18 @@ namespace OnlineLibrary.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult MyTransactions()
+        {
+            // Retrieve the current user's ID
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Retrieve the user's transactions
+            var transactions = transactionRepository.GetTransactionByMember(userId);
+
+            // Pass the transactions to the view
+            return View(transactions);
+        }
+
+
     }
 }

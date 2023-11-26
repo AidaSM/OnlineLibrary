@@ -1,11 +1,11 @@
-﻿
+﻿@model IEnumerable<OnlineLibrary.Models.BookModel>
+
 @{
     ViewData["Title"] = "IndexAdmin";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <h1>IndexAdmin</h1>
-
 
 <h2>Book Covers</h2>
 
@@ -13,8 +13,16 @@
     @foreach (var book in Model)
     {
         <div style="float: left; margin: 10px;">
-            <img src="@Url.Content(book.ImagePath)" alt="@book.Title" style="max-width: 150px; max-height: 200px;" />
+            <a href="@Url.Action("Details", "Home", new { id = book.Idbook })">
+                <img src="@Url.Content(book.ImagePath)" alt="@book.Title" style="max-width: 150px; max-height: 200px;" />
+            </a>
             <p>@book.Title</p>
+
+            <!-- Add a form with a hidden field for book ID and a button to reserve the book -->
+            <form method="post" action="@Url.Action("ReserveBook", "Transaction")">
+                <input type="hidden" name="idbook" value="@book.Idbook" />
+                <button type="submit">Reserve This Book</button>
+            </form>
         </div>
     }
 </div>

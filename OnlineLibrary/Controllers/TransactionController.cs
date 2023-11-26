@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLibrary.Data;
 using OnlineLibrary.Models;
+using OnlineLibrary.Repository;
+using System.Security.Claims;
 
 namespace OnlineLibrary.Controllers
 {
@@ -116,6 +118,27 @@ namespace OnlineLibrary.Controllers
             {
                 return View("DeleteTransaction");
             }
+        }
+        [HttpPost]
+        public IActionResult ReserveBook(Guid idbook)
+        {
+            // Get the current user's ID
+            var userId =User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Create a new transaction
+            var newTransaction = new TransactionModel
+            {
+                Idbook = idbook,
+                Idmember = userId,
+                Date = DateTime.Now,
+                Status = "Reserved" // You might want to adjust this based on your logic
+            };
+
+            // Insert the transaction into the database
+            _repository.InsertTransaction(newTransaction);
+
+            // You can redirect to a success page or return a different view
+            return RedirectToAction("Index", "Home");
         }
     }
 }

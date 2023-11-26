@@ -48,16 +48,18 @@ namespace OnlineLibrary.Repository
             }
             return transactionsList;
         }
-        public List<TransactionModel> GetTransactionByMember(Guid memberID)
+        public List<TransactionModel> GetTransactionByMember(string memberID)
         {
             List<TransactionModel> transactionsList = new List<TransactionModel>();
 
-            foreach (Transaction transaction in dbContext.Transactions.Where(x => x.Idmember == memberID))
+            foreach (Transaction transaction in dbContext.Transactions.Where(x => string.Equals(x.Idmember, memberID, StringComparison.OrdinalIgnoreCase)))
             {
                 transactionsList.Add(MapDbObjectToModel(transaction));
             }
+
             return transactionsList;
         }
+
         public List<TransactionModel> GetTransactionByBook(Guid bookID)
         {
             List<TransactionModel> transactionsList = new List<TransactionModel>();
@@ -80,10 +82,25 @@ namespace OnlineLibrary.Repository
         }
         public void InsertTransaction(TransactionModel transactionModel)
         {
-            transactionModel.Idtransaction = Guid.NewGuid();
-            dbContext.Transactions.Add(MapModelToDbObject(transactionModel));
-            dbContext.SaveChanges();
+            // Ensure that the book with the specified ID exists
+            var book = dbContext.Books.FirstOrDefault(b => b.Idbook == transactionModel.Idbook);
+
+            if (book != null && book.AvailableCopies > 0)
+            {
+                transactionModel.Idtransaction = Guid.NewGuid();
+                transactionModel.Retrun = transactionModel.Date.AddDays(30); // Set return date as Date + 30 days
+
+                // Decrement the AvailableCopies
+                book.AvailableCopies--;
+
+                dbContext.Transactions.Add(MapModelToDbObject(transactionModel));
+                dbContext.SaveChanges();
+            }
+            // Optionally, you can add an else statement to handle the case where the book is not available.
         }
+
+
+
 
         public void UpdateTransaction(TransactionModel transactionModel)
         {

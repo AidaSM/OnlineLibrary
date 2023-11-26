@@ -1,0 +1,33 @@
+﻿@model BookModel
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "Book Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Book Details</h2>
+
+<div>
+    <div>
+        <img src="@Url.Content(Model.ImagePath)" alt="@Model.Title" style="max-width: 300px; max-height: 400px;" />
+    </div>
+
+    <div>
+        <h3>@Model.Title</h3>
+        <!-- Display other book details -->
+        <!-- Option to reserve the book with user input fields -->
+        <form action="/Reservation/Reserve" method="post">
+            <input type="hidden" name="bookId" value="@Model.Idbook" />
+
+            <!-- Automatically include the connected account ID -->
+            <input type="hidden" name="userId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
+
+            <label for="returnDate">Return Date:</label>
+            <input type="date" id="returnDate" name="returnDate" required>
+
+            <!-- Submit button -->
+            <button type="submit">Reserve This Book</button>
+        </form>
+    </div>
+</div>
