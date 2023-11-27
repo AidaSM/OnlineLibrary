@@ -129,7 +129,7 @@ namespace OnlineLibrary.Controllers
             var newTransaction = new TransactionModel
             {
                 Idbook = idbook,
-                Idmember = userId,
+                Idmember = Guid.Parse(userId),
                 Date = DateTime.Now,
                 Status = "Reserved" // You might want to adjust this based on your logic
             };

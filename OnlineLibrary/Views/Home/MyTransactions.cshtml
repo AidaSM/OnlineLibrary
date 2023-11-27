@@ -1,11 +1,12 @@
-﻿@model List<TransactionModel>
+﻿@model List<OnlineLibrary.Models.TransactionModel>
+
+<!-- Your view content -->
 
 <h1>My Transactions</h1>
 
 <table>
     <thead>
         <tr>
-            <th>Transaction ID</th>
             <th>Book Title</th>
             <th>Date</th>
             <th>Return Date</th>
@@ -17,8 +18,7 @@
         @foreach (var transaction in Model)
         {
             <tr>
-                <td>@transaction.Idtransaction</td>
-                <td>@transaction.Idbook</td>
+                <td>@transaction.BookTitle</td>
                 <td>@transaction.Date</td>
                 <td>@transaction.Retrun</td>
                 <td>@transaction.Status</td>
