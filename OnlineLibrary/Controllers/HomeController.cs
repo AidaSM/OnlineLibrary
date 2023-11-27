@@ -59,6 +59,7 @@ namespace OnlineLibrary.Controllers
             var bookModel = new BookModel
             {
                 Idbook = bookEntity.Idbook,
+                Title= bookEntity.Title,
                 ImagePath= bookEntity.ImagePath,
                 IdauthorNavigation = bookEntity.IdauthorNavigation,
                 IdgenreNavigation = bookEntity.IdgenreNavigation

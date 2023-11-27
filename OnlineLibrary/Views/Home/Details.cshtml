@@ -27,7 +27,7 @@
             <input type="hidden" name="bookId" value="@Model.Idbook" />
             <!-- Automatically include the connected account ID -->
             <input type="hidden" name="userId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
-
+            <input type="hidden" name="idbook" value="@Model.Idbook" />
             <!-- Submit button -->
             <button type="button" id="reserveButton" style="background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Reserve This Book</button>
         </form>
@@ -36,18 +36,17 @@
 
 @section scripts {
     <script>
-        // Use jQuery for simplicity
         $(document).ready(function () {
             // Handle button click
             $("#reserveButton").click(function () {
-                // Get form data
-                var formData = $("#reserveForm").serialize();
+                // Get book ID
+                var bookId = $("#reserveForm input[name='bookId']").val();
 
                 // Make AJAX request
                 $.ajax({
                     type: "POST",
-                    url: "/Reservation/Reserve",
-                    data: formData,
+                    url: "/Transaction/ReserveBook",
+                    data: { idbook: bookId },
                     success: function (result) {
                         alert(result.message); // Show success message
                     },
