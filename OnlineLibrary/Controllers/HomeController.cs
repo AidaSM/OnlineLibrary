@@ -35,44 +35,8 @@ namespace OnlineLibrary.Controllers
             }
             return View("Index", books);
         }
-        public IActionResult BookDetails(Guid id)
-        {
-            // Implement logic to retrieve details of the specified book
-            var book = repository.GetBookByID(id);
 
-            // Pass the book model to the view
-            return View(book);
-        }
         /*public IActionResult Details(Guid id)
-        {
-            // Retrieve the book entity from the database
-            var bookEntity = _context.Books
-                .Where(b => b.Idbook == id)
-                .Include(b => b.IdauthorNavigation) // Include related author
-                .Include(b => b.IdgenreNavigation)  // Include related genre
-                .FirstOrDefault();
-
-            // Check if the book entity is found
-            if (bookEntity == null)
-            {
-                return NotFound();
-            }
-
-            // Map the entity to your view model (BookModel)
-            var bookModel = new BookModel
-            {
-                Idbook = bookEntity.Idbook,
-                Title= bookEntity.Title,
-                ImagePath= bookEntity.ImagePath,
-                IdauthorNavigation = bookEntity.IdauthorNavigation,
-                IdgenreNavigation = bookEntity.IdgenreNavigation
-            };
-
-            return View(bookModel);
-        }
-
-        */
-        public IActionResult Details(Guid id)
         {
             // Retrieve the book entity from the database
             var bookEntity = _context.Books
@@ -97,6 +61,37 @@ namespace OnlineLibrary.Controllers
                 IdauthorNavigation = bookEntity.IdauthorNavigation,
                 IdgenreNavigation = bookEntity.IdgenreNavigation,
                 Reviews = bookEntity.Reviews.ToList()  // Assuming Reviews is a navigation property in BookModel
+            };
+
+            return View(bookModel);
+        }
+        */
+        public IActionResult Details(Guid id)
+        {
+            // Retrieve the book entity from the database
+            var bookEntity = _context.Books
+                .Where(b => b.Idbook == id)
+                .Include(b => b.IdauthorNavigation)
+                .Include(b => b.IdgenreNavigation)
+                .Include(b => b.Reviews)
+                    .ThenInclude(r => r.IdmemberNavigation) // Include related member for each review
+                .FirstOrDefault();
+
+            // Check if the book entity is found
+            if (bookEntity == null)
+            {
+                return NotFound();
+            }
+
+            // Map the entity to your view model (BookModel)
+            var bookModel = new BookModel
+            {
+                Idbook = bookEntity.Idbook,
+                Title = bookEntity.Title,
+                ImagePath = bookEntity.ImagePath,
+                IdauthorNavigation = bookEntity.IdauthorNavigation,
+                IdgenreNavigation = bookEntity.IdgenreNavigation,
+                Reviews = bookEntity.Reviews.ToList()
             };
 
             return View(bookModel);

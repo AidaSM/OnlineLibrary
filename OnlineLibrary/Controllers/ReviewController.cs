@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLibrary.Data;
 using OnlineLibrary.Models;
+using System.Security.Claims;
 
 namespace OnlineLibrary.Controllers
 {
@@ -116,5 +117,36 @@ namespace OnlineLibrary.Controllers
                 return View("DeleteReview");
             }
         }
+        [HttpPost]
+        public IActionResult InsertReview(Guid idbook, int rating, string text)
+        {
+            try
+            {
+                // Get the current user's ID
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                // Create a new review
+                var newReview = new ReviewModel
+                {
+                    Idbook = idbook,
+                    Idmember = userId,
+                    Rating = rating,
+                    Text = text,
+                    Date = DateTime.Now
+                };
+
+                // Insert the review into the database
+                _repository.InsertReview(newReview);
+
+                // You can redirect to a success page or return a different view
+                return RedirectToAction("Details", "Book", new { id = idbook }); // Redirect to the book details page
+            }
+            catch
+            {
+                // Handle the exception or return an error view
+                return RedirectToAction("Index", "Home"); // Redirect to the home page for now
+            }
+        }
+
     }
 }
