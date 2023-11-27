@@ -6,7 +6,7 @@ namespace OnlineLibrary.Models.DBObjects
     public partial class Transaction
     {
         public Guid Idtransaction { get; set; }
-        public Guid Idmember { get; set; }
+        public string Idmember { get; set; }
         public Guid Idbook { get; set; }
         public DateTime Date { get; set; }
         public DateTime Retrun { get; set; }

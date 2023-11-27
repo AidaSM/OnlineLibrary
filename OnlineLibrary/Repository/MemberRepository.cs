@@ -24,9 +24,9 @@ namespace OnlineLibrary.Repository
             }
             return membersList;
         }
-        public MemberModel GetMemberByID(Guid ID)
+        public MemberModel GetMemberByID(string ID)
         {
-            return MapDbObjectToModel(dbContext.Members.FirstOrDefault(x => x.Idmember == ID));
+            return MapDbObjectToModel(dbContext.Members.FirstOrDefault(x => x.Idmember.Equals( ID)));
         }
         public List<MemberModel> GetMemberByRegistrationDate(DateTime date)
         {
@@ -40,7 +40,7 @@ namespace OnlineLibrary.Repository
         }
         public void InsertMember(MemberModel memberModel)
         {
-            memberModel.Idmember = Guid.NewGuid();
+            memberModel.Idmember = Guid.NewGuid().ToString();
             dbContext.Members.Add(MapModelToDbObject(memberModel));
             dbContext.SaveChanges();
         }
@@ -58,9 +58,9 @@ namespace OnlineLibrary.Repository
                 dbContext.SaveChanges();
             }
         }
-        public void DeleteMember(Guid id)
+        public void DeleteMember(string id)
         {
-            Member existingMember = dbContext.Members.FirstOrDefault(x => x.Idmember == id);
+            Member existingMember = dbContext.Members.FirstOrDefault(x => x.Idmember.Equals( id));
             if (existingMember != null)
             {
                 dbContext.Members.Remove(existingMember);

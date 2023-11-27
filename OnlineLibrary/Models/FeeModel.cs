@@ -6,7 +6,7 @@ namespace OnlineLibrary.Models
     {
         public Guid Idfee { get; set; }
         public Guid Idbook { get; set; }
-        public Guid Idmember { get; set; }
+        public string Idmember { get; set; }
         public string? Description { get; set; }
         public int IsPaid { get; set; }
         public decimal Amount { get; set; }

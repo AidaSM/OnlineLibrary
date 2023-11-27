@@ -52,13 +52,15 @@ namespace OnlineLibrary.Repository
         {
             List<TransactionModel> transactionsList = new List<TransactionModel>();
 
-            foreach (Transaction transaction in dbContext.Transactions.Where(x => string.Equals(x.Idmember, memberID, StringComparison.OrdinalIgnoreCase)))
+            foreach (Transaction transaction in dbContext.Transactions
+                .Where(x => x.Idmember.ToUpper() == memberID.ToUpper()))
             {
                 transactionsList.Add(MapDbObjectToModel(transaction));
             }
 
             return transactionsList;
         }
+
 
         public List<TransactionModel> GetTransactionByBook(Guid bookID)
         {

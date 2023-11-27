@@ -12,7 +12,7 @@ namespace OnlineLibrary.Models.DBObjects
             Transactions = new HashSet<Transaction>();
         }
 
-        public Guid Idmember { get; set; }
+        public string Idmember { get; set; }
         public string Username { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string Email { get; set; } = null!;

@@ -24,7 +24,7 @@ namespace OnlineLibrary.Controllers
         }
 
         // GET: MemberController/Details/5
-        public ActionResult Details(Guid id)
+        public ActionResult Details(string id)
         {
             var model = _repository.GetMemberByID(id);
             return View("DetailsMember", model);
@@ -57,7 +57,7 @@ namespace OnlineLibrary.Controllers
             return RedirectToAction(nameof(Index));
 
         }
-        public ActionResult Edit(Guid id)
+        public ActionResult Edit(string id)
         {
             var member = _repository.GetMemberByID(id);
             if (member == null)
@@ -72,7 +72,7 @@ namespace OnlineLibrary.Controllers
         // POST: TvaController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(Guid id, [Bind("Idmember, Username, Password, Email, RegistrationDate")] Models.MemberModel model)
+        public async Task<ActionResult> Edit(string id, [Bind("Idmember, Username, Password, Email, RegistrationDate")] Models.MemberModel model)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace OnlineLibrary.Controllers
         }
 
 
-        public ActionResult Delete(Guid id)
+        public ActionResult Delete(string id)
         {
             var member = _repository.GetMemberByID(id);
             if (member == null)
@@ -106,7 +106,7 @@ namespace OnlineLibrary.Controllers
         // POST: AuthorController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(Guid id, IFormCollection collection)
+        public ActionResult Delete(string id, IFormCollection collection)
         {
             try
             {

@@ -28,11 +28,11 @@ namespace OnlineLibrary.Repository
         {
             return MapDbObjectToModel(dbContext.Reviews.FirstOrDefault(x => x.Idreview == ID));
         }
-        public List<ReviewModel> GetReviewByMember(Guid memberID)
+        public List<ReviewModel> GetReviewByMember(string memberID)
         {
             List<ReviewModel> reviewsList = new List<ReviewModel>();
 
-            foreach (Review review in dbContext.Reviews.Where(x => x.Idmember == memberID))
+            foreach (Review review in dbContext.Reviews.Where(x => x.Idmember.Equals (memberID)))
             {
                 reviewsList.Add(MapDbObjectToModel(review));
             }
@@ -84,7 +84,7 @@ namespace OnlineLibrary.Repository
             if (dbReview != null)
             {
                 reviewModel.Idreview = dbReview.Idreview;
-                reviewModel.Idmember = dbReview.Idmember;
+                reviewModel.Idmember = dbReview.Idmember.ToString();
                 reviewModel.Idbook = dbReview.Idbook;
                 reviewModel.Rating = dbReview.Rating;
                 reviewModel.Text = dbReview.Text;

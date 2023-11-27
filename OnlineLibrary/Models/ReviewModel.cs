@@ -6,7 +6,7 @@ namespace OnlineLibrary.Models
     public class ReviewModel
     {
         public Guid Idreview { get; set; }
-        public Guid Idmember { get; set; }
+        public string Idmember { get; set; }
         public Guid Idbook { get; set; }
         public decimal Rating { get; set; }
         public string? Text { get; set; }

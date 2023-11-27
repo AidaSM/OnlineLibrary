@@ -42,7 +42,7 @@ namespace OnlineLibrary.Repository
         {
             List<FeeModel> feesList = new List<FeeModel>();
 
-            foreach (Fee fee in dbContext.Fees.Where(x => x.Idmember == memberID))
+            foreach (Fee fee in dbContext.Fees.Where(x => x.Idmember.Equals(memberID)))
             {
                 feesList.Add(MapDbObjectToModel(fee));
             }
