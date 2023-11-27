@@ -312,7 +312,7 @@ namespace OnlineLibrary.Data
 
                 entity.Property(e => e.Idmember).HasColumnName("IDMember");
 
-                entity.Property(e => e.Retrun).HasColumnType("datetime");
+                entity.Property(e => e.Return).HasColumnType("datetime");
 
                 entity.Property(e => e.Status)
                     .HasMaxLength(50)

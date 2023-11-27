@@ -9,7 +9,7 @@ namespace OnlineLibrary.Models.DBObjects
         public string Idmember { get; set; }
         public Guid Idbook { get; set; }
         public DateTime Date { get; set; }
-        public DateTime Retrun { get; set; }
+        public DateTime Return { get; set; }
         public string? Status { get; set; }
 
         public virtual Book IdbookNavigation { get; set; } = null!;

@@ -42,7 +42,7 @@ namespace OnlineLibrary.Repository
         {
             List<TransactionModel> transactionsList = new List<TransactionModel>();
 
-            foreach (Transaction transaction in dbContext.Transactions.Where(x => x.Retrun == retur))
+            foreach (Transaction transaction in dbContext.Transactions.Where(x => x.Return == retur))
             {
                 transactionsList.Add(MapDbObjectToModel(transaction));
             }
@@ -90,7 +90,7 @@ namespace OnlineLibrary.Repository
             if (book != null && book.AvailableCopies > 0)
             {
                 transactionModel.Idtransaction = Guid.NewGuid();
-                transactionModel.Retrun = transactionModel.Date.AddDays(30); // Set return date as Date + 30 days
+                transactionModel.Return = transactionModel.Date.AddDays(30); // Set return date as Date + 30 days
 
                 // Decrement the AvailableCopies
                 book.AvailableCopies--;
@@ -113,7 +113,7 @@ namespace OnlineLibrary.Repository
                 existingTransaction.Idmember = transactionModel.Idmember;
                 existingTransaction.Idbook = transactionModel.Idbook;
                 existingTransaction.Date = transactionModel.Date;
-                existingTransaction.Retrun = transactionModel.Retrun;
+                existingTransaction.Return = transactionModel.Return;
                 existingTransaction.Status = transactionModel.Status;
                 dbContext.SaveChanges();
             }
@@ -136,7 +136,7 @@ namespace OnlineLibrary.Repository
                 transactionModel.Idmember = dbTransaction.Idmember;
                 transactionModel.Idbook = dbTransaction.Idbook;
                 transactionModel.Date = dbTransaction.Date;
-                transactionModel.Retrun = dbTransaction.Retrun;
+                transactionModel.Return = dbTransaction.Return;
                 transactionModel.Status = dbTransaction.Status;
             }
             return transactionModel;
@@ -150,7 +150,7 @@ namespace OnlineLibrary.Repository
                 transaction.Idmember = transactionModel.Idmember;
                 transaction.Idbook = transactionModel.Idbook;
                 transaction.Date = transactionModel.Date;
-                transaction.Retrun = transactionModel.Retrun;
+                transaction.Return = transactionModel.Return;
                 transaction.Status = transactionModel.Status;
             }
             return transaction;

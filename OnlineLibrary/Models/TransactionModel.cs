@@ -13,7 +13,7 @@ namespace OnlineLibrary.Models
         public DateTime Date { get; set; }
         [DisplayFormat(DataFormatString = "0:MM/dd/yyyy")]
         [DataType(DataType.Date)]
-        public DateTime Retrun { get; set; }
+        public DateTime Return { get; set; }
         public string? Status { get; set; }
 
         public virtual Book IdbookNavigation { get; set; } = null!;

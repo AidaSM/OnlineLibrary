@@ -117,7 +117,7 @@ namespace OnlineLibrary.Controllers
                         Idtransaction = transaction.Idtransaction,
                         Idbook = transaction.Idbook,
                         Date = transaction.Date,
-                        Retrun = transaction.Retrun,
+                        Return = transaction.Return,
                         Status = transaction.Status,
                         Book = bookModel  // Assuming you have a navigation property in the TransactionModel for Book
                     };
@@ -130,7 +130,18 @@ namespace OnlineLibrary.Controllers
             // Pass the transactions to the view
             return View(transactionModels);
         }
+        public IActionResult Search(string query)
+        {
+            // Perform search logic using the query parameter
+            // For example, search for books with titles containing the query
 
+            var searchResults = _context.Books
+                .Where(b => b.Title.Contains(query))
+                .ToList();
+
+            // Pass the search results to the view
+            return View(searchResults);
+        }
 
 
     }
