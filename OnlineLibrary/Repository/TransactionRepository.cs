@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using OnlineLibrary.Data;
+﻿using OnlineLibrary.Data;
 using OnlineLibrary.Models;
 using OnlineLibrary.Models.DBObjects;
 
@@ -49,58 +48,16 @@ namespace OnlineLibrary.Repository
             }
             return transactionsList;
         }
-        /*public List<TransactionModel> GetTransactionByMember(string memberID)
-        {
-            List<TransactionModel> transactionsList = new List<TransactionModel>();
-
-            if (Guid.TryParse(memberID, out Guid memberGuid))
-            {
-                foreach (Transaction transaction in dbContext.Transactions.Where(x => x.Idmember == memberGuid))
-                {
-                    transactionsList.Add(MapDbObjectToModel(transaction));
-                }
-            }
-            // Handle the case where memberID is not a valid GUID if needed
-
-            return transactionsList;
-        }*/
         public List<TransactionModel> GetTransactionByMember(string memberID)
         {
             List<TransactionModel> transactionsList = new List<TransactionModel>();
 
-            if (Guid.TryParse(memberID, out Guid memberGuid))
+            foreach (Transaction transaction in dbContext.Transactions.Where(x => string.Equals(x.Idmember, memberID, StringComparison.OrdinalIgnoreCase)))
             {
-                foreach (Transaction transaction in dbContext.Transactions
-                    .Include(t => t.IdbookNavigation) // Ensure the IdbookNavigation property is loaded
-                    .Where(x => x.Idmember == memberGuid))
-                {
-                    // Assuming MapDbObjectToModel takes a TransactionModel as a parameter
-                    transactionsList.Add(MapDbObjectToModelBook(transaction));
-                }
+                transactionsList.Add(MapDbObjectToModel(transaction));
             }
-            // Handle the case where memberID is not a valid GUID if needed
 
             return transactionsList;
-        }
-        private TransactionModel MapDbObjectToModelBook(Transaction transaction)
-        {
-            TransactionModel transactionModel = new TransactionModel();
-
-            // Map properties from Transaction to your TransactionModel
-            if (transaction != null)
-            {
-                transactionModel.Idtransaction = transaction.Idtransaction;
-                transactionModel.Idmember = transaction.Idmember;
-                transactionModel.Idbook = transaction.Idbook;
-                transactionModel.Date = transaction.Date;
-                transactionModel.Retrun = transaction.Retrun;
-                transactionModel.Status = transaction.Status;
-
-                // Access Book properties directly using IdbookNavigation
-                transactionModel.BookTitle = transaction.IdbookNavigation?.Title;
-            }
-
-            return transactionModel;
         }
 
         public List<TransactionModel> GetTransactionByBook(Guid bookID)
