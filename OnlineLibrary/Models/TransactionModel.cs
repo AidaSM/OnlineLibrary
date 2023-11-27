@@ -18,6 +18,6 @@ namespace OnlineLibrary.Models
 
         public virtual Book IdbookNavigation { get; set; } = null!;
         public virtual Member IdmemberNavigation { get; set; } = null!;
-
+        public BookModel Book { get; internal set; }
     }
 }

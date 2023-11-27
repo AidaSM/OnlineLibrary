@@ -86,9 +86,50 @@ namespace OnlineLibrary.Controllers
             // Retrieve the user's transactions
             var transactions = transactionRepository.GetTransactionByMember(userId);
 
+            // Create a list to store the transformed transactions
+            var transactionModels = new List<TransactionModel>();
+
+            foreach (var transaction in transactions)
+            {
+                // Retrieve book information for each transaction
+                var bookEntity = _context.Books
+                    .Where(b => b.Idbook == transaction.Idbook)
+                    .Include(b => b.IdauthorNavigation)
+                    .Include(b => b.IdgenreNavigation)
+                    .FirstOrDefault();
+
+                if (bookEntity != null)
+                {
+                    // Map the book entity to your view model (BookModel)
+                    var bookModel = new BookModel
+                    {
+                        Idbook = bookEntity.Idbook,
+                        Title=bookEntity.Title,
+                        ImagePath = bookEntity.ImagePath,
+                        IdauthorNavigation = bookEntity.IdauthorNavigation,
+                        IdgenreNavigation = bookEntity.IdgenreNavigation
+                    };
+
+                    // Map the transaction entity to your view model (TransactionModel)
+                    var transactionModel = new TransactionModel
+                    {
+                        Idtransaction = transaction.Idtransaction,
+                        Idbook = transaction.Idbook,
+                        Date = transaction.Date,
+                        Retrun = transaction.Retrun,
+                        Status = transaction.Status,
+                        Book = bookModel  // Assuming you have a navigation property in the TransactionModel for Book
+                    };
+
+                    // Add the transactionModel to the list
+                    transactionModels.Add(transactionModel);
+                }
+            }
+
             // Pass the transactions to the view
-            return View(transactions);
+            return View(transactionModels);
         }
+
 
 
     }
