@@ -11,7 +11,7 @@ namespace OnlineLibrary.Models
         public int IsPaid { get; set; }
         public decimal Amount { get; set; }
 
-        public virtual Book IdbookNavigation { get; set; } = null!;
+        public virtual BookModel IdbookNavigation { get; set; } = null!;
         public virtual Member IdmemberNavigation { get; set; } = null!;
 
     }

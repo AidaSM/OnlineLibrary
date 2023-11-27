@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OnlineLibrary.Data;
 using OnlineLibrary.Models;
+using System.Data;
 
 namespace OnlineLibrary.Controllers
 {
-    [Authorize(Roles = "admin")]
+    
     public class BookController : Controller
     {
         public Repository.BookRepository _repository;
@@ -68,6 +70,8 @@ namespace OnlineLibrary.Controllers
             return RedirectToAction(nameof(Index));
 
         }
+      
+
         public ActionResult Edit(Guid id)
         {
             var book = _repository.GetBookByID(id);

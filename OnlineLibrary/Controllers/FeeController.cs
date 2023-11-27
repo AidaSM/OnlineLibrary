@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OnlineLibrary.Data;
 using OnlineLibrary.Models;
+using System.Data;
 
 namespace OnlineLibrary.Controllers
 {
-    [Authorize(Roles = "admin")]
+   
     public class FeeController : Controller
     {
         public Repository.FeeRepository _repository;

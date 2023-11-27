@@ -38,7 +38,7 @@ namespace OnlineLibrary.Repository
             }
             return feesList;
         }
-        public List<FeeModel> GetFeeByMember(Guid memberID)
+        public List<FeeModel> GetFeeByMember(string memberID)
         {
             List<FeeModel> feesList = new List<FeeModel>();
 

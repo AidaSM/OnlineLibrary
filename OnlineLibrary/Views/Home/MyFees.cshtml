@@ -1,0 +1,37 @@
+﻿@model List<OnlineLibrary.Models.FeeModel>
+
+@{
+    ViewData["Title"] = "My Fees";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>My Fees</h2>
+
+@if (Model.Count > 0)
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Book Title</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var fee in Model)
+            {
+                <tr>
+                    <td>@fee.IdbookNavigation.Title</td>
+                    <td>@fee.Description</td>
+                    <td>@fee.Amount</td>
+                    <td>@(fee.IsPaid == 1 ? "Paid" : "Unpaid")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No fees found.</p>
+}

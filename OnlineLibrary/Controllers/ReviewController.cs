@@ -6,7 +6,7 @@ using OnlineLibrary.Models;
 
 namespace OnlineLibrary.Controllers
 {
-    [Authorize(Roles = "admin")]
+    
     public class ReviewController : Controller
     {
         public Repository.ReviewRepository _repository;
@@ -16,7 +16,7 @@ namespace OnlineLibrary.Controllers
             _repository = new Repository.ReviewRepository(dbContext);
         }
         // GET: ReviewController
-        [AllowAnonymous]
+      
         public ActionResult Index()
         {
             var reviews = _repository.GetReviews();
@@ -29,7 +29,7 @@ namespace OnlineLibrary.Controllers
             var model = _repository.GetReviewByID(id);
             return View("DetailsReview", model);
         }
-        [Authorize(Roles = "User, Admin")]
+        
         // GET: ReviewController/Create
         public ActionResult Create()
         {
@@ -39,7 +39,7 @@ namespace OnlineLibrary.Controllers
         
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User, Admin")]
+        
         public async Task<IActionResult> Create([Bind("Idmember,Idbook,Rating,Text,Date")] ReviewModel model)
         {
             try

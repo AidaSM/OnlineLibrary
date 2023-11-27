@@ -47,12 +47,13 @@
                         </ul>
                         <!-- Search Bar -->
                         <li class="nav-item">
-                            <form class="form-inline my-2 my-lg-0">
+                            <form class="form-inline my-2 my-lg-0" action="@Url.Action("Search", "Home")" method="get">
                                 <div class="input-group">
                                     <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="query">
                                     <button class="btn btn-outline-success" type="submit">Search</button>
                                 </div>
                             </form>
+
                         </li>
                     </ul>
                     <ul class="navbar-nav">

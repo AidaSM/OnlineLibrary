@@ -6,7 +6,7 @@ using OnlineLibrary.Models;
 
 namespace OnlineLibrary.Controllers
 {
-    [Authorize(Roles = "admin")]
+    
     public class GenreController : Controller
     {
         public Repository.GenreRepository _repository;

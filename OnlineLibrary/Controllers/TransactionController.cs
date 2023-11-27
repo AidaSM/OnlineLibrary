@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace OnlineLibrary.Controllers
 {
-    [Authorize(Roles = "admin")]
+    
     public class TransactionController : Controller
     {
         public Repository.TransactionRepository _repository;
@@ -33,7 +33,7 @@ namespace OnlineLibrary.Controllers
         }
 
         // GET: TransactionController/Create
-        [Authorize(Roles = "User, Admin")]
+        
         public ActionResult Create()
         {
             return View("CreateTransaction");
@@ -41,7 +41,7 @@ namespace OnlineLibrary.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User, Admin")]
+        
         public async Task<IActionResult> Create([Bind("Idmember,Idbook,Date,Retrun,Status")] TransactionModel model)
         {
             try

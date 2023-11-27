@@ -8,7 +8,7 @@ using OnlineLibrary.Models;
 
 namespace OnlineLibrary.Controllers
 {
-    [Authorize(Roles ="admin")]
+   
     public class AuthorController : Controller
     {
         private readonly ApplicationDbContext _context;

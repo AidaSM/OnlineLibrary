@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using OnlineLibrary.Data;
 using OnlineLibrary.Models;
+using OnlineLibrary.Models.DBObjects;
 using OnlineLibrary.Repository;
 using System.Diagnostics;
 using System.Security.Claims;
@@ -15,12 +16,14 @@ namespace OnlineLibrary.Controllers
         private readonly ApplicationDbContext _context;
         private readonly BookRepository repository;
         private readonly TransactionRepository transactionRepository;
+        private readonly FeeRepository feeRepository;
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
             repository = new BookRepository(context);
             transactionRepository = new TransactionRepository(context);
+            feeRepository = new FeeRepository(context);
         }
 
         public IActionResult Index()
@@ -132,15 +135,83 @@ namespace OnlineLibrary.Controllers
         }
         public IActionResult Search(string query)
         {
-            // Perform search logic using the query parameter
-            // For example, search for books with titles containing the query
-
             var searchResults = _context.Books
                 .Where(b => b.Title.Contains(query))
+                .Include(b => b.IdauthorNavigation) 
+                .Include(b => b.IdgenreNavigation)  
+                .Select(b => new BookModel
+                {
+                    Idbook = b.Idbook,
+                    Title = b.Title,
+                    Idauthor = b.Idauthor,
+                    Isbn = b.Isbn,
+                    PublicationYear = b.PublicationYear,
+                    Idgenre = b.Idgenre,
+                    Language = b.Language,
+                    TotalCopies = b.TotalCopies,
+                    AvailableCopies = b.AvailableCopies,
+                    ImagePath = b.ImagePath,
+                    IdauthorNavigation = b.IdauthorNavigation, // Populate the Author navigation property
+                    IdgenreNavigation = b.IdgenreNavigation,
+                    // Add other necessary property mappings
+                })
                 .ToList();
 
-            // Pass the search results to the view
             return View(searchResults);
+        }
+
+        public IActionResult MyFees()
+        {
+            // Retrieve the current user's ID
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Retrieve the user's fees
+            var fees = feeRepository.GetFeeByMember(userId);
+
+            // Create a list to store the transformed fees
+            var feeModels = new List<FeeModel>();
+
+            foreach (var fee in fees)
+            {
+                // Retrieve book information for each fee
+                var bookEntity = _context.Books
+                    .Where(b => b.Idbook == fee.Idbook)
+                    .Include(b => b.IdauthorNavigation)
+                    .Include(b => b.IdgenreNavigation)
+                    .FirstOrDefault();
+
+                if (bookEntity != null)
+                {
+                    // Map the book entity to your view model (BookModel)
+                    var bookModel = new BookModel
+                    {
+                        Idbook = bookEntity.Idbook,
+                        Title = bookEntity.Title,
+                        ImagePath = bookEntity.ImagePath,
+                        IdauthorNavigation = bookEntity.IdauthorNavigation,
+                        IdgenreNavigation = bookEntity.IdgenreNavigation
+                    };
+
+                    // Map the fee entity to your view model (FeeModel)
+                    var feeModel = new FeeModel
+                    {
+                        Idfee = fee.Idfee,
+                        Idbook = fee.Idbook,
+                        Idmember = fee.Idmember,
+                        Description = fee.Description,
+                        IsPaid = fee.IsPaid,
+                        Amount = fee.Amount,
+                        IdbookNavigation = bookModel,  // Update to use BookModel
+                        IdmemberNavigation = fee.IdmemberNavigation
+                    };
+
+                    // Add the feeModel to the list
+                    feeModels.Add(feeModel);
+                }
+            }
+
+            // Pass the fees to the view
+            return View(feeModels);
         }
 
 
