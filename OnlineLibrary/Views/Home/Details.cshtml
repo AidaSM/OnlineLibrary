@@ -52,6 +52,19 @@
 
                     <button type="button" id="reserveButton" class="btn btn-success btn-block mt-3">Reserve This Book</button>
                 </form>
+
+                <!-- Display reviews -->
+                <h4>Reviews</h4>
+                <ul>
+                    @foreach (var review in Model.Reviews)
+                    {
+                        <li>
+                            
+                            <span>Rating: @review.Rating</span>
+                            <p>@review.Text</p>
+                        </li>
+                    }
+                </ul>
             </div>
         </div>
     </div>

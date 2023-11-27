@@ -43,7 +43,7 @@ namespace OnlineLibrary.Controllers
             // Pass the book model to the view
             return View(book);
         }
-        public IActionResult Details(Guid id)
+        /*public IActionResult Details(Guid id)
         {
             // Retrieve the book entity from the database
             var bookEntity = _context.Books
@@ -71,6 +71,36 @@ namespace OnlineLibrary.Controllers
             return View(bookModel);
         }
 
+        */
+        public IActionResult Details(Guid id)
+        {
+            // Retrieve the book entity from the database
+            var bookEntity = _context.Books
+                .Where(b => b.Idbook == id)
+                .Include(b => b.IdauthorNavigation) // Include related author
+                .Include(b => b.IdgenreNavigation)  // Include related genre
+                .Include(b => b.Reviews)  // Include related reviews
+                .FirstOrDefault();
+
+            // Check if the book entity is found
+            if (bookEntity == null)
+            {
+                return NotFound();
+            }
+
+            // Map the entity to your view model (BookModel)
+            var bookModel = new BookModel
+            {
+                Idbook = bookEntity.Idbook,
+                Title = bookEntity.Title,
+                ImagePath = bookEntity.ImagePath,
+                IdauthorNavigation = bookEntity.IdauthorNavigation,
+                IdgenreNavigation = bookEntity.IdgenreNavigation,
+                Reviews = bookEntity.Reviews.ToList()  // Assuming Reviews is a navigation property in BookModel
+            };
+
+            return View(bookModel);
+        }
 
         public IActionResult Privacy()
         {
