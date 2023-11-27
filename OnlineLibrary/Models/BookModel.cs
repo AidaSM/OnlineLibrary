@@ -20,5 +20,6 @@ namespace OnlineLibrary.Models
         public virtual ICollection<Review> Reviews { get; set; }
         public virtual ICollection<Transaction> Transactions { get; set; }
         public AuthorModel Author { get; internal set; }
+        public GenreModel Genre { get; internal set; }
     }
 }

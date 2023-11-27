@@ -8,26 +8,54 @@
 
 <h2>Book Details</h2>
 
-<div>
-    <div>
-        <img src="@Url.Content(Model.ImagePath)" alt="@Model.Title" style="max-width: 300px; max-height: 400px;" />
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="flex: 1;">
+        <img src="@Url.Content(Model.ImagePath)" alt="@Model.Title" style="max-width: 300px; max-height: 400px; border-radius: 8px;" />
     </div>
 
-    <div>
+    <div style="flex: 1; padding: 20px;">
         <h3>@Model.Title</h3>
+
+        <!-- Display author's name -->
+        <p>Author: @Model.IdauthorNavigation.Name</p>
+        <p>Genre: @Model.IdgenreNavigation.Name</p>
+
+
         <!-- Display other book details -->
         <!-- Option to reserve the book with user input fields -->
-        <form action="/Reservation/Reserve" method="post">
+        <form id="reserveForm">
             <input type="hidden" name="bookId" value="@Model.Idbook" />
-
             <!-- Automatically include the connected account ID -->
             <input type="hidden" name="userId" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" />
 
-            <label for="returnDate">Return Date:</label>
-            <input type="date" id="returnDate" name="returnDate" required>
-
             <!-- Submit button -->
-            <button type="submit">Reserve This Book</button>
+            <button type="button" id="reserveButton" style="background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Reserve This Book</button>
         </form>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        // Use jQuery for simplicity
+        $(document).ready(function () {
+            // Handle button click
+            $("#reserveButton").click(function () {
+                // Get form data
+                var formData = $("#reserveForm").serialize();
+
+                // Make AJAX request
+                $.ajax({
+                    type: "POST",
+                    url: "/Reservation/Reserve",
+                    data: formData,
+                    success: function (result) {
+                        alert(result.message); // Show success message
+                    },
+                    error: function (error) {
+                        alert("Error: " + error.responseJSON.message); // Show error message
+                    }
+                });
+            });
+        });
+    </script>
+}

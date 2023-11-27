@@ -131,7 +131,7 @@ namespace OnlineLibrary.Controllers
                 Idbook = idbook,
                 Idmember = userId,
                 Date = DateTime.Now,
-                Status = "Reserved" // You might want to adjust this based on your logic
+                Status = "Reserved" 
             };
 
             // Insert the transaction into the database

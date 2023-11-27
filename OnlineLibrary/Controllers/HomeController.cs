@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
 using OnlineLibrary.Data;
 using OnlineLibrary.Models;
@@ -41,16 +42,31 @@ namespace OnlineLibrary.Controllers
         }
         public IActionResult Details(Guid id)
         {
-            // Get the book details (you may need to modify this based on your data structure)
-            var book = repository.GetBookByID(id);
+            // Retrieve the book entity from the database
+            var bookEntity = _context.Books
+                .Where(b => b.Idbook == id)
+                .Include(b => b.IdauthorNavigation) // Include related author
+                .Include(b => b.IdgenreNavigation)  // Include related genre
+                .FirstOrDefault();
 
-            if (book == null)
+            // Check if the book entity is found
+            if (bookEntity == null)
             {
                 return NotFound();
             }
 
-            return View(book);
+            // Map the entity to your view model (BookModel)
+            var bookModel = new BookModel
+            {
+                Idbook = bookEntity.Idbook,
+                ImagePath= bookEntity.ImagePath,
+                IdauthorNavigation = bookEntity.IdauthorNavigation,
+                IdgenreNavigation = bookEntity.IdgenreNavigation
+            };
+
+            return View(bookModel);
         }
+
 
         public IActionResult Privacy()
         {

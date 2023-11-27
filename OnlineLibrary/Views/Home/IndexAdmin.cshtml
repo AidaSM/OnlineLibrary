@@ -5,23 +5,21 @@
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>IndexAdmin</h1>
+<h2>Books</h2>
 
-<h2>Book Covers</h2>
-
-<div>
+<div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
     @foreach (var book in Model)
     {
-        <div style="float: left; margin: 10px;">
+        <div style="text-align: center; margin: 20px; border: 1px solid #ddd; padding: 10px; border-radius: 8px; background-color: #f9f9f9;">
             <a href="@Url.Action("Details", "Home", new { id = book.Idbook })">
-                <img src="@Url.Content(book.ImagePath)" alt="@book.Title" style="max-width: 150px; max-height: 200px;" />
+                <img src="@Url.Content(book.ImagePath)" alt="@book.Title" style="max-width: 250px; max-height: 300px; border-radius: 8px;" />
             </a>
-            <p>@book.Title</p>
+            <p style="margin-top: 10px; font-size: 16px; font-weight: bold;">@book.Title</p>
 
             <!-- Add a form with a hidden field for book ID and a button to reserve the book -->
-            <form method="post" action="@Url.Action("ReserveBook", "Transaction")">
+            <form method="post" action="@Url.Action("ReserveBook", "Transaction")" style="margin-top: 10px;">
                 <input type="hidden" name="idbook" value="@book.Idbook" />
-                <button type="submit">Reserve This Book</button>
+                <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Reserve This Book</button>
             </form>
         </div>
     }
