@@ -26,3 +26,9 @@ body {
     max-height: 200px;
     object-fit: cover;
 }
+
+#chartContainer {
+    width: 50%;
+    margin: auto;
+    padding: 20px;
+}

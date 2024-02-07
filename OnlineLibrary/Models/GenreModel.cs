@@ -8,6 +8,7 @@ namespace OnlineLibrary.Models
         public string Name { get; set; } = null!;
 
         public virtual ICollection<Book> Books { get; set; }
-
+        public decimal TotalFees { get; internal set; }
+        public int TotalCopies { get; internal set; }
     }
 }
